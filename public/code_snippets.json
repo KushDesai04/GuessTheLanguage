@@ -1,0 +1,43 @@
+[
+    {
+      "language": "javascript",
+      "code": "function greet(name) {\n  return `Hello, ${name}!`;\n}\n\nconsole.log(greet('World'));"
+    },
+    {
+      "language": "python",
+      "code": "def factorial(n):\n    return 1 if n == 0 else n * factorial(n-1)\n\nprint(factorial(5))"
+    },
+    {
+      "language": "java",
+      "code": "public class HelloWorld {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\");\n    }\n}"
+    },
+    {
+      "language": "c++",
+      "code": "#include <iostream>\n\nint main() {\n    std::cout << \"Hello, World!\" << std::endl;\n    return 0;\n}"
+    },
+    {
+      "language": "ruby",
+      "code": "class Person\n  attr_reader :name\n\n  def initialize(name)\n    @name = name\n  end\n\n  def greet\n    puts \"Hello, I'm #{@name}!\"\n  end\nend\n\nperson = Person.new(\"Alice\")\nperson.greet"
+    },
+    {
+      "language": "go",
+      "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    numbers := []int{1, 2, 3, 4, 5}\n    sum := 0\n    for _, num := range numbers {\n        sum += num\n    }\n    fmt.Printf(\"Sum: %d\\n\", sum)\n}"
+    },
+    {
+      "language": "php",
+      "code": "<?php\n$fruits = array(\"apple\", \"banana\", \"orange\");\n\nforeach ($fruits as $fruit) {\n    echo $fruit . \"\\n\";\n}\n?>"
+    },
+    {
+      "language": "swift",
+      "code": "enum Compass {\n    case north, south, east, west\n}\n\nlet currentDirection = Compass.east\nprint(\"We're heading \\(currentDirection)\")"
+    },
+    {
+      "language": "rust",
+      "code": "fn main() {\n    let numbers = vec![1, 2, 3, 4, 5];\n    let sum: i32 = numbers.iter().sum();\n    println!(\"Sum: {}\", sum);\n}"
+    },
+    {
+      "language": "typescript",
+      "code": "interface Person {\n    name: string;\n    age: number;\n}\n\nfunction greet(person: Person): string {\n    return `Hello, ${person.name}! You are ${person.age} years old.`;\n}\n\nconsole.log(greet({ name: \"Alice\", age: 30 }));"
+    }
+  ]
+  
