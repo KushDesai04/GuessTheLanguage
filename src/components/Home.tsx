@@ -62,12 +62,12 @@ const Home = () => {
     } else {
       setCorrectGuess(false);
     }
+    setGuess("");
     setShowAnswer(true);
   }, [guess, currentSnippet, score, getRandomSnippet]);
 
   const nextLanguage = () => {
     setShowAnswer(false);
-    setGuess("");
     getRandomSnippet();
   };
 
@@ -134,18 +134,6 @@ const Home = () => {
           </pre>
         </div>
       )}
-      <div style={{ marginTop: "5vh" }}>
-        <label htmlFor="guessInput" style={{ paddingRight: "1em" }}>
-          Language:
-        </label>
-        <input
-          type="text"
-          id="guessInput"
-          value={guess}
-          onChange={(e) => handleGuessInput(e.target.value)}
-        ></input>
-      </div>
-
       {showAnswer && (
         <>
           <div style={{ marginTop: "5vh" }}>
@@ -164,8 +152,20 @@ const Home = () => {
           </div>
         </>
       )}
+
       {!showAnswer && (
         <>
+          <div style={{ marginTop: "5vh" }}>
+            <label htmlFor="guessInput" style={{ paddingRight: "1em" }}>
+              Language:
+            </label>
+            <input
+              type="text"
+              id="guessInput"
+              value={guess}
+              onChange={(e) => handleGuessInput(e.target.value)}
+            ></input>
+          </div>
           <button
             style={{ marginTop: "5vh" }}
             onClick={checkGuess}
