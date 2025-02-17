@@ -12,7 +12,9 @@ const Home = () => {
   const [currentSnippet, setCurrentSnippet] = useState<CodeSnippet | null>(
     null
   );
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [showAnswer, setShowAnswer] = useState<boolean>(false);
+  const [correctGuess, setCorrectGuess] = useState<boolean>(false);
 
   const getRandomSnippet = useCallback(() => {
     if (snippets.length > 0) {
@@ -45,6 +47,45 @@ const Home = () => {
     fetchSnippets();
   }, []);
 
+  const checkGuess = useCallback(() => {
+    if (!guess) {
+      document
+        .getElementById("guessError")
+        ?.style.setProperty("display", "block");
+      return;
+    }
+    document.getElementById("guessError")?.style.setProperty("display", "none");
+    console.log(currentSnippet?.language);
+    if (currentSnippet?.language == guess.toLowerCase()) {
+      setScore(score + 1);
+      setCorrectGuess(true);
+    } else {
+      setCorrectGuess(false);
+    }
+    setShowAnswer(true);
+  }, [guess, currentSnippet, score, getRandomSnippet]);
+
+  const nextLanguage = () => {
+    setShowAnswer(false);
+    setGuess("");
+    getRandomSnippet();
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: { key: string }) => {
+      if (e.key === "Enter") {
+        checkGuess();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup function to remove the event listener
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [checkGuess]); // Add checkGuess to the dependency array
+
   const resetGame = useCallback(() => {
     setIsLoading(true);
     fetch("./code_snippets.json")
@@ -73,24 +114,6 @@ const Home = () => {
 
   const handleGuessInput = (s: string) => {
     setGuess(s);
-  };
-
-  const checkGuess = () => {
-    if (!guess) {
-      document
-        .getElementById("guessError")
-        ?.style.setProperty("display", "block");
-      return;
-    }
-    document
-        .getElementById("guessError")
-        ?.style.setProperty("display", "none");
-    console.log(currentSnippet?.language);
-    if (currentSnippet?.language == guess.toLowerCase()) {
-      setScore(score + 1);
-    }
-    setGuess("");
-    getRandomSnippet();
   };
 
   return (
@@ -123,16 +146,36 @@ const Home = () => {
         ></input>
       </div>
 
-      <button
-        style={{ marginTop: "5vh" }}
-        onClick={checkGuess}
-        id="guessButton"
-      >
-        Guess
-      </button>
-      <p id="guessError" style={{ color: "red", display: "none" }}>
-        Make a guess
-      </p>
+      {showAnswer && (
+        <>
+          <div style={{ marginTop: "5vh" }}>
+            {correctGuess ? (
+              <span style={{ color: "lightgreen" }}>Nice one!</span>
+            ) : (
+              <span style={{ color: "red" }}>Oops, it was actually {currentSnippet?.language}.</span>
+            )}
+          </div>
+          <div>
+            <button onClick={nextLanguage} style={{ marginTop: "5vh" }}>
+              Next
+            </button>
+          </div>
+        </>
+      )}
+      {!showAnswer && (
+        <>
+          <button
+            style={{ marginTop: "5vh" }}
+            onClick={checkGuess}
+            id="guessButton"
+          >
+            Guess
+          </button>
+          <p id="guessError" style={{ color: "red", display: "none" }}>
+            Make a guess
+          </p>
+        </>
+      )}
     </>
   );
 };
