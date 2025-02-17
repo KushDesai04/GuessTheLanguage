@@ -152,7 +152,9 @@ const Home = () => {
             {correctGuess ? (
               <span style={{ color: "lightgreen" }}>Nice one!</span>
             ) : (
-              <span style={{ color: "red" }}>Oops, it was actually {currentSnippet?.language}.</span>
+              <span style={{ color: "red" }}>
+                Oops, it was actually {currentSnippet?.language}.
+              </span>
             )}
           </div>
           <div>
